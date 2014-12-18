@@ -1,6 +1,7 @@
 -- Some useful globals
 class = require 'lib.middleclass'
 inspect = require 'lib.inspect'
+local _print = print
 
 local game = require 'game'
 local Menu = require 'scenes.menu'
@@ -11,7 +12,7 @@ MOAISim.openWindow( "Hello World", game.width, game.height)
 MOAIGfxDevice.setClearColor(1,1,1,1)
 
 
-StateManager.push_scene(Menu:new())
+StateManager.push_scene(Menu)
 local main_loop = MOAICoroutine.new()
 
 -- Bubble input back to current scene

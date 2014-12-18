@@ -12,14 +12,25 @@ function BaseScene:initialize()
     self.layer:setViewport(viewport)
 
     self.layers = {self.layer}
+    self.entities = {}
 end
 
 function BaseScene:cleanup()
     -- Cleanup method called on garbage collection
+    if (self.entities and #self.entities) then
+        for _, entity in ipairs(self.entities) do
+            entity:cleanup()
+        end
+    end
 end
 
 function BaseScene:update()
     -- Update method called on every tick of game loop
+    if (self.entities and #self.entities) then
+        for _, entity in ipairs(self.entities) do
+            entity:update()
+        end
+    end
 end
 
 function BaseScene:get_layers()

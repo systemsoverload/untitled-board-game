@@ -2,6 +2,8 @@ local game = require 'game'
 local BaseScene = require "scenes.base"
 local StateManager = require "gamestate"
 
+local Player = require "entities.player"
+
 -------------------------------------------
 -- Scene definition -----------------------
 -------------------------------------------
@@ -18,12 +20,21 @@ function MainScene:initialize()
     self.layers[1] = self.layer
 
     self.gfxQuad = MOAIGfxQuad2D.new()
-    self.gfxQuad:setTexture( "sprites/bear.png" )
-    self.gfxQuad:setRect( -64, -64, 64, 64 )
+    self.gfxQuad:setTexture("sprites/bear.png")
+    self.gfxQuad:setRect(-128, -128, 128, 128 )
 
     self.prop = MOAIProp2D.new()
-    self.prop:setDeck(self.gfxQuad )
+    self.prop:setDeck(self.gfxQuad)
     self.layer:insertProp(self.prop)
+
+    self.player_1 = Player
+
+    self.entities = {self.player_1}
+
+
+    for _,e in ipairs(self.entities) do
+        e:initialize()
+    end
 end
 
 function MainScene:input_callback(key, down)
@@ -33,7 +44,11 @@ function MainScene:input_callback(key, down)
 end
 
 function MainScene:update()
-    self.prop:moveRot(1, 1, 0)
+    self.prop:moveRot(1, -1, 0)
+
+    for _, v in ipairs(self.entities) do
+        v:update()
+    end
 end
 
 return MainScene
